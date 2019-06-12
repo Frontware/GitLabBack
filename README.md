@@ -1,37 +1,46 @@
-## Welcome to GitHub Pages
+# GitLabBack
 
-You can use the [editor on GitHub](https://github.com/Frontware/GitLabBack/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+[![Go Report Card](https://goreportcard.com/badge/github.com/Frontware/GitLabBack)](https://goreportcard.com/report/github.com/Frontware/GitLabBack)
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+**GitLabBack** is tool to backup your git repositories from GitLab.
 
-### Markdown
+**GitLabBack** creates a backup by cloning repositories from GitLab. If the backup already exists, **GitLabBack** will pull changes instead of cloning the repositories. However, if git fails to pull new changes from GitLab, **GitLabBack** will delete the backup and clone it again.
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+## Usage
 
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+```bash
+$ ./GitLabBack
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+## Help
 
-### Jekyll Themes
+```bash
+$ ./GitLabBack -h
+Usage of GitLabBack:
+  -config string
+        Config path (default ".GitLabBack.json")
+  -dir string
+        Backup directory
+  -ssh
+        Enable ssh clone
+  -token string
+        GitLab token
+  -url string
+        GitLab server base url
+```
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/Frontware/GitLabBack/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+## Configuration
 
-### Support or Contact
+Default configuration file is ".GitLabBack.json".
 
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+```json
+{"baseURL":"","token":"YOUR TOKEN","backupdir":"","ssh":false}
+```
+
+## Build
+
+If you have Golang 1.11.x+ installed, you can clone the repository and:
+
+```bash
+$ go build
+```
