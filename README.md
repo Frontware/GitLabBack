@@ -2,7 +2,7 @@
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/Frontware/GitLabBack)](https://goreportcard.com/report/github.com/Frontware/GitLabBack)
 
-**GitLabBack** is tool to backup your git repositories from GitLab.
+**GitLabBack** is a tool to backup your git repositories from GitLab to your disk.
 
 **GitLabBack** creates a backup by cloning repositories from GitLab. If the backup already exists, **GitLabBack** will pull changes instead of cloning the repositories. However, if git fails to pull new changes from GitLab, **GitLabBack** will delete the backup and clone it again.
 
