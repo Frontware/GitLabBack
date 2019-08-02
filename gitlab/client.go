@@ -68,7 +68,7 @@ func (c *Client) setBaseURL(urlStr string) error {
 }
 
 // NewRequest creates a new http request for GitLab api
-func (c *Client) NewRequest(method, path string) (*http.Request, error) {
+func (c *Client) NewRequest(method, path string, query map[string]string) (*http.Request, error) {
 	u := *c.baseURL
 
 	unescaped, err := url.PathUnescape(path)
@@ -77,6 +77,14 @@ func (c *Client) NewRequest(method, path string) (*http.Request, error) {
 	}
 
 	u.Path = u.Path + unescaped
+
+	if query != nil {
+		q := u.Query()
+		for k, v := range query {
+			q.Set(k, v)
+		}
+		u.RawQuery = q.Encode()
+	}
 
 	req, err := http.NewRequest(method, u.String(), nil)
 	if err != nil {

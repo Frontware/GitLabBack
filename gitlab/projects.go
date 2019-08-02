@@ -51,7 +51,8 @@ type Project struct {
 // ListProjects requests list of projects for a group
 func (c *Client) ListProjects(id int) ([]Project, error) {
 	strID := strconv.Itoa(id)
-	req, err := c.NewRequest("GET", "groups/"+strID+"/projects")
+	query := map[string]string{"per_page": "100"}
+	req, err := c.NewRequest("GET", "groups/"+strID+"/projects", query)
 	if err != nil {
 		return nil, err
 	}

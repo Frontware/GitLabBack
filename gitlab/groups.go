@@ -19,7 +19,8 @@ type Group struct {
 
 // ListGroups requests list of GitLab groups
 func (c *Client) ListGroups() ([]Group, error) {
-	req, err := c.NewRequest("GET", "groups")
+	query := map[string]string{"per_page": "100"}
+	req, err := c.NewRequest("GET", "groups", query)
 	if err != nil {
 		return nil, err
 	}
