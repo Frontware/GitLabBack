@@ -99,7 +99,12 @@ func (c *Client) NewRequest(method, path string, query map[string]string) (*http
 }
 
 // Do requests the api and store response in struct
-func (c *Client) Do(req *http.Request, v interface{}) error {
+func (c *Client) Do(req *http.Request, v interface{}) (err error) {
+
+	if v == nil {
+		return nil
+	}
+
 	resp, err := c.client.Do(req)
 	if err != nil {
 		return err
@@ -111,15 +116,7 @@ func (c *Client) Do(req *http.Request, v interface{}) error {
 		return err
 	}
 
-	if v == nil {
-		return nil
-	}
-
 	err = json.Unmarshal(b, v)
 
-	if err != nil {
-		return err
-	}
-
-	return nil
+	return err
 }
