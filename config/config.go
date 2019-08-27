@@ -3,14 +3,12 @@ package config
 import (
 	"encoding/json"
 	"io"
-	"io/ioutil"
 	"log"
 	"os"
-	"strings"
 )
 
 // File default config file name
-const File = ".GitLabBack.json"
+var File = ".gitlabback"
 
 // Config basic struct for backup configuration
 type Config struct {
@@ -18,27 +16,6 @@ type Config struct {
 	Token     string `json:"token"`
 	BackupDir string `json:"backupdir"`
 	SSH       bool   `json:"ssh"`
-}
-
-// Read reads config file
-func Read(file string) (*Config, error) {
-
-	b, err := ioutil.ReadFile(file)
-	if err != nil {
-		return &Config{}, err
-	}
-
-	conf := &Config{}
-
-	if err = json.Unmarshal(b, conf); err != nil {
-		return &Config{}, err
-	}
-
-	if conf.BackupDir != "" && !strings.HasSuffix(conf.BackupDir, "/") {
-		conf.BackupDir += "/"
-	}
-
-	return conf, nil
 }
 
 // Write creates a config file if it doesn't exist

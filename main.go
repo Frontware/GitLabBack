@@ -4,28 +4,9 @@ import (
 	"flag"
 	"fmt"
 	"os"
-	"strings"
 
 	"github.com/Frontware/GitLabBack/config"
 )
-
-// setup prompts for token and backup directory
-func setup(conf *config.Config) {
-	var token string
-	var dir string
-
-	fmt.Print("Token: ")
-	fmt.Scanf("%s", &token)
-	fmt.Print("Backup Directory: ")
-	fmt.Scanf("%s", &dir)
-
-	if strings.TrimSpace(dir) != "" && !strings.HasSuffix(dir, "/") {
-		dir += "/"
-	}
-
-	conf.Token = token
-	conf.BackupDir = dir
-}
 
 func main() {
 
@@ -39,7 +20,7 @@ func main() {
 
 	c, err := config.Read(*file)
 	if err != nil {
-		setup(c)
+		config.Setup(c)
 		fmt.Printf("Write config to %s\n", *file)
 		config.Write(*file, c)
 		os.Exit(-1)
@@ -55,6 +36,8 @@ func main() {
 
 	if *dir != "" {
 		c.BackupDir = *dir
+	} else {
+		c.BackupDir = "."
 	}
 
 	if *ssh {
