@@ -5,15 +5,18 @@ GOCLEAN=$(GOCMD) clean
 STRIPFLAGS=-ldflags="-s -w"
 BINARY_FILE=GitLabBack
 
+ifeq ($(GOARCH),)
+	GOARCH=amd64
+endif
+
 all: linux windows
 
 linux:
-	GOOS=$@ $(GOBUILD) $(STRIPFLAGS) -o $(BINARY_FILE)_$@
+	GOARCH=$(GOARCH) GOOS=$@ $(GOBUILD) $(STRIPFLAGS) -o $(BINARY_FILE)_$@_$(GOARCH)
 
 windows:
-	GOOS=$@ $(GOBUILD) $(STRIPFLAGS) -o $(BINARY_FILE)_$@
+	GOARCH=$(GOARCH) GOOS=$@ $(GOBUILD) $(STRIPFLAGS) -o $(BINARY_FILE)_$@_$(GOARCH)
 
 clean:
 	$(GOCLEAN)
-	rm -f $(BINARY_FILE)_linux
-	rm -f $(BINARY_FILE)_windows
+	rm -f $(BINARY_FILE)_*
